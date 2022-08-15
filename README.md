@@ -1,6 +1,6 @@
 # finalTask
 
-题目一: 分析一条 TPCDS SQL
+题目一: 分析一条 TPCDS SQL  
 分析一条 TPCDS SQL（请基于 Spark 3.1.1 版本解答）
 
 * 运行该 SQL，如 q38，并截图该 SQL 的 SQL 执行图
@@ -40,15 +40,13 @@ Saving to: ‘spark-3.1.1-bin-hadoop2.7.tgz’
 > tar -zxvf spark-3.1.1-bin-hadoop2.7.tgz
 
 ### 生成数据
-> mkdir -p tpcds-data-1g
-> 
+> mkdir -p tpcds-data-1g  
 > vim ~/.bashrc
 ```bash
 // 添加如下内容
 export SPARK_HOME=/home/hadoop/geektime/spark-tpcds-datagen/spark-3.1.1-bin-hadoop2.7
 ```
-> source ~/.bashrc
-> 
+> source ~/.bashrc  
 > echo $SPARK_HOME
 ```
 >> /home/hadoop/geektime/spark-tpcds-datagen/spark-3.1.1-bin-hadoop2.7
