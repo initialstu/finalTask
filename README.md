@@ -401,11 +401,12 @@ LIMIT 100
 > ./spark-3.1.1-bin-hadoop2.7/bin/spark-submit --conf spark.sql.planChangeLog.level=WARN --class org.apache.spark.sql.execution.benchmark.TPCDSQueryBenchmark --jars spark-core_2.12-3.1.1-tests.jar,spark-catalyst_2.12-3.1.1-tests.jar spark-sql_2.12-3.1.1-tests.jar --data-location tpcds-data-1g --query-filter "q38" > spark311.q38.log 2>&1
 ### 执行截图
 ![running](running.png)
-> // 执行日志文件在spark311.q38.log中
-> 
+
+执行日志文件在spark311.q38.log中
 > grep "Applying Rule org.apache.spark.sql.catalyst.optimizer" spark311.q38.log | sort | uniq -c > spark311_q38_optimizer.log
+
+### 展示该sql执行用到的优化规则
 ```
-// 展示过滤后的优化规则
       3 === Applying Rule org.apache.spark.sql.catalyst.optimizer.CollapseProject ===
      42 === Applying Rule org.apache.spark.sql.catalyst.optimizer.ColumnPruning ===
       3 === Applying Rule org.apache.spark.sql.catalyst.optimizer.ConstantFolding ===
@@ -418,4 +419,22 @@ LIMIT 100
       3 === Applying Rule org.apache.spark.sql.catalyst.optimizer.ReplaceDistinctWithAggregate ===
       3 === Applying Rule org.apache.spark.sql.catalyst.optimizer.ReplaceIntersectWithSemiJoin ===
       3 === Applying Rule org.apache.spark.sql.catalyst.optimizer.RewritePredicateSubquery ===
+```
+
+### 挑选两条优化规则描述
+#### ColumnPruning 列裁剪
+列裁剪目的：**过滤掉查询不需要使用到的列**
+
+```
+列裁剪ColumnPruning 指把那些查询不需要的字段过滤掉，使得扫描的数据量减少。
+如果底层的文件格式为列式存储（比如 Parquet）则可以进一步映射下推，映射可以理解为表结构映射，Parquet每一列的所有值都是连续存储的，所以分区取出每一列的所有值就可以出现TableScan算子，而避免扫描整个表文件内容。
+该优化大幅度减少了网络、内存数据量消耗，对于列存格式（Parquet）来说也大大提高了扫描效率。
+```
+#### PushDownPredicates 谓词下推
+谓词下推规则：主要将过滤条件尽可能地下推到底层，最好是贴近数据源。
+
+```
+谓词可以下推的前提：不影响查询结果，即要保证下推前和下推后两个sql执行得到的效果相同。
+主要是把filter操作尽可能下推到贴近数据源的地方，这样做可以将计算转移至数据源端，减少加载和计算的数据量。
+filter时，project字段必须是确定性的才能下推，因为如果是非确定性的字段，下推前后查询结果可能不太一样，这点是非常重要的条件。
 ```
