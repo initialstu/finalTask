@@ -1,0 +1,12 @@
+      3 === Applying Rule org.apache.spark.sql.catalyst.optimizer.CollapseProject ===
+     42 === Applying Rule org.apache.spark.sql.catalyst.optimizer.ColumnPruning ===
+      3 === Applying Rule org.apache.spark.sql.catalyst.optimizer.ConstantFolding ===
+      3 === Applying Rule org.apache.spark.sql.catalyst.optimizer.EliminateLimits ===
+      3 === Applying Rule org.apache.spark.sql.catalyst.optimizer.InferFiltersFromConstraints ===
+     18 === Applying Rule org.apache.spark.sql.catalyst.optimizer.PushDownLeftSemiAntiJoin ===
+      9 === Applying Rule org.apache.spark.sql.catalyst.optimizer.PushDownPredicates ===
+     15 === Applying Rule org.apache.spark.sql.catalyst.optimizer.RemoveNoopOperators ===
+      3 === Applying Rule org.apache.spark.sql.catalyst.optimizer.ReorderJoin ===
+      3 === Applying Rule org.apache.spark.sql.catalyst.optimizer.ReplaceDistinctWithAggregate ===
+      3 === Applying Rule org.apache.spark.sql.catalyst.optimizer.ReplaceIntersectWithSemiJoin ===
+      3 === Applying Rule org.apache.spark.sql.catalyst.optimizer.RewritePredicateSubquery ===
