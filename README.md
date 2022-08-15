@@ -400,7 +400,7 @@ LIMIT 100
 ### 执行截图
 ![running](running.png)
 
-执行日志文件在spark311.q38.log中
+执行日志文件在spark311.q38.log中[spark311.q38.log](spark311.q38.log)
 > grep "Applying Rule org.apache.spark.sql.catalyst.optimizer" spark311.q38.log | sort | uniq -c > spark311_q38_optimizer.log
 
 ### 展示该sql执行用到的优化规则
