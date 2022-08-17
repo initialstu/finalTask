@@ -442,7 +442,7 @@ filter时，project字段必须是确定性的才能下推，因为如果是非�
 你是某互联网公司的大数据平台架构师，请设计一套基于 Lambda 架构的数据平台架构，要求尽可能多的把课程中涉及的组件添加到该架构图中。
 并描述 Lambda 架构的优缺点，要求不少于 300 字。
 
-
+![lambda](lambda.jpg)
 
 ### lamda架构
 Lambda 架构由Storm的作者Nathan Marz提出，其设计目的在于提供一个能满足大数据系统关键特性的架构，包括高容错、低延迟、可扩展等。其整合离线计算与实时计算，融合不可变性、读写分离和复杂性隔离等原则，可集成Hadoop, Kafka, Spark，Storm等各类大数据组件。主要分为批处理层Batch Layer，流式处理层Speed Layer，以及服务层Serving Layer。
